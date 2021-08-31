@@ -1,14 +1,14 @@
 <template>
   <Header title="Shop section" :length="length"/>
   <div class="lds-dual-ring" v-if="items.length==0"></div>
-  <Items :items="items" />
+  <Items :items="items" @delete-item="del"/>
 </template>
 
 <script>
 import Header from './Header'
 import Items from './Items'
 import {onValue} from "firebase/database";
-import {getRef} from "../firebase";
+import {getRef,removeItem} from "../firebase";
 
 export default {
   name: 'Directory',
@@ -21,6 +21,17 @@ export default {
           items: [],
           length: 0
         }
+  },
+  methods:{
+    del(id){
+      this.items.forEach((item,index)=> {
+        if (item.id === id) {
+            removeItem(index);
+            this.items = this.items.filter((item) => item.id !== id)
+            return
+        }
+      })
+    }
   },
   async created(){
     onValue(getRef(), (snapshot) => {

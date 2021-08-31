@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set,remove } from "firebase/database";
 import {sections} from './sections';
 
 let config = {
@@ -28,4 +28,9 @@ export function addToStore(item,index) {
 export function getRef(){
     const db = getDatabase();
     return ref(db, 'shop/');
+}
+
+export function removeItem(id){
+    const db = getDatabase();
+    return remove(ref(db, 'shop/'+id)); 
 }
