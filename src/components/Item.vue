@@ -1,17 +1,22 @@
 <template>
-    <transition name="fade" appear>
-        <li class="item">
-            <h3>{{item.title}}</h3><hr>
-            <img v-bind:src="item.imageUrl" alt="img"/> 
-        </li>
-    </transition>
+    <li class="item">
+        <div class="head">
+            <h3>{{item.title}}</h3>
+            <Button :text="'X'"  :color="'#9c3f3f'" @click="$emit('delete-item')"/>
+        </div><hr>
+        <img v-bind:src="item.imageUrl" alt="img"/> 
+    </li>
 </template>
 
 <script>
+import Button from './Button'
 export default{
     name: 'Item',
     props: {
         item: Object
+    },
+    components:{
+        Button
     }
 }
 </script>
@@ -27,6 +32,10 @@ export default{
     border-radius: 10px;
     width: 20%;
 }
+.head{
+    display:flex;
+    justify-content: space-between;
+}
 
 img {
     max-width: 100%;
@@ -41,11 +50,7 @@ h3{
     line-height: 1.45;
 }
 
-.fade-leave-active{
-    transition: opacity .9s;
-}
-
-.fade-leave-to {
-    opacity: 0;
+button{
+    padding: 4px 10px;
 }
 </style>
