@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set,remove } from "firebase/database";
+import { getDatabase, ref, set,remove,onValue ,push} from "firebase/database";
 import {sections} from './sections';
 
 let config = {
@@ -15,19 +15,24 @@ let config = {
 
 initializeApp(config);
 
+onValue(getRef(), (snapshot) => {
+    if(snapshot.val()== null){
+        sections.forEach((item) => {
+            addToStore(item)
+        })
+    }
+});
 
-sections.forEach((item,index) => {
-    addToStore(item,index)
-})
-
-export function addToStore(item,index) {
+export function addToStore(item) {
     const db = getDatabase();
-    set(ref(db, 'shop/' + index), item);
+    const newPostRef = push(ref(db, 'shop'));
+    item.id = newPostRef.key;
+    set(newPostRef, item);
 }
 
 export function getRef(){
     const db = getDatabase();
-    return ref(db, 'shop/');
+    return ref(db, 'shop');
 }
 
 export function removeItem(id){

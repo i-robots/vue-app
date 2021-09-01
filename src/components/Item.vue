@@ -1,11 +1,11 @@
 <template>
-    <li class="item">
-        <div class="head">
+    <div class="item">
+        <div class="header">
             <h3>{{item.title}}</h3>
             <Button :text="'X'"  :color="'#9c3f3f'" @click="$emit('delete-item')"/>
         </div><hr>
         <img v-bind:src="item.imageUrl" alt="img"/> 
-    </li>
+    </div>
 </template>
 
 <script>
@@ -23,16 +23,15 @@ export default{
 
 <style scoped>
 .item{
-    margin-right: 15px;
     margin-top: 10px;
     background-color: #283046;
     box-shadow: 0 4px 24px 0 rgba(34,41,47,.24);
     border: none;
     color: white;
     border-radius: 10px;
-    width: 20%;
+    transform: rotate(90deg);
 }
-.head{
+.header{
     display:flex;
     justify-content: space-between;
 }

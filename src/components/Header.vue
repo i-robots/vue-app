@@ -8,11 +8,6 @@
             </div>
 
             <div class="field">
-                <label class="label"> Image URL </label>
-                <input class="input" type="text" v-model="imgUrl" />
-            </div>
-
-            <div class="field">
                 <label class="label"> Type </label>
                 <select v-model="gender">
                     <option v-for="gender in ['Men', 'Women']" :value="gender" :key="gender">
@@ -33,13 +28,12 @@ import {addToStore} from "../firebase";
 export default {
     name: 'Header',   
     props: {
-        title: String,
-        length: Number
+        title: String
     },
     data(){
         return{
             stitle: "",
-            gender: "Men",
+            gender: 'Men',
             imgUrl: ""
         }
     },
@@ -48,13 +42,16 @@ export default {
     },
     methods: {
         async fakeSubmit() {
+            if(this.gender == 'Men'){
+                this.imageUrl = "https://i.ibb.co/cvpntL1/hats.png"
+            }else{
+                this.imageUrl = "https://i.ibb.co/GCCdy8t/womens.png"
+            }
             const obj = {
                 title : this.stitle,
-                imageUrl: this.imgUrl,
-                id: Math.floor(Math.random() * 1000),
-                linkUrl: 'shop/' + this.gender,
+                imageUrl: this.imageUrl,
             }
-            addToStore(obj,this.length)
+            addToStore(obj)
         },
     }
 }

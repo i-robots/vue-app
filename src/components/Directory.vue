@@ -1,5 +1,5 @@
 <template>
-  <Header title="Shop section" :length="length"/>
+  <Header title="Shop section"/>
   <div class="lds-dual-ring" v-if="items.length==0"></div>
   <Items :items="items" @delete-item="del"/>
 </template>
@@ -19,43 +19,36 @@ export default {
   data() {
         return{
           items: [],
-          length: 0
         }
   },
   methods:{
     del(id){
-      this.items.forEach((item,index)=> {
-        if (item.id === id) {
-            removeItem(index);
-            this.items = this.items.filter((item) => item.id !== id)
-            return
-        }
-      })
+      removeItem(id);
     }
   },
   async created(){
     onValue(getRef(), (snapshot) => {
-      this.items = snapshot.val();
-      this.length = this.items.length
+      this.items = Object.values(snapshot.val());
     });
-  }
+  },
+  beforeUpdate(){
+    this.items = Object.values(this.items).reverse();
+  },
 }
 </script>
 
 <style scoped>
 .lds-dual-ring {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  left: 45%;
+  margin-top: 2em;
   display: inline-block;
-  width: 80px;
-  height: 80px;
 }
 .lds-dual-ring:after {
   content: " ";
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   margin: 8px;
   border-radius: 50%;
   border: 6px solid #fff;

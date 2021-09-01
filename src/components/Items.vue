@@ -1,5 +1,5 @@
 <template>
-    <transition-group tag="ul" name="list">
+    <transition-group tag="div" class="horizontal-scroll" ref="scroll" name="list">
         <item @delete-item="this.$emit('delete-item', item.id)" :item="item" :key="item.id" v-for="item in items"/>
     </transition-group>
 </template>
@@ -19,22 +19,37 @@ export default {
 </script>
 
 <style scoped>
-ul > li {
-    display: inline-block;
+
+.horizontal-scroll{
+    position:fixed;
+    max-height: 1200px;
+    padding-left: 30px;
+    margin-left: -120px;
+    overflow-y: overlay;
+	overflow-x: hidden;
+    transform: rotate(-90deg);
+    transform-origin: right top;
+    background: #151c2f;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
-ul{
-    background: #151c2f;
-    border-radius: 1em;
+.horizontal-scroll::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+.horizontal-scroll > div {
+	width: 120px;
+    height: 120px;
 }
 
 .list-enter-from{
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.6) rotate(80deg);
 }
 .list-enter-to{
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(90deg);
 }
 .list-enter-active{
     transition: all 0.6s ease;
@@ -42,12 +57,12 @@ ul{
 
 .list-leave-from{
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(90deg);
 }
 
 .list-leave-to{
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.6) rotate(80deg);
 }
 .list-leave-active{
     transition:all 0.6s ease;

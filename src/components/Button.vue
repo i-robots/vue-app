@@ -24,5 +24,8 @@ button{
     margin: 5px;
     font-size: 15px;
 }
+button:hover{
+    box-shadow: 1px 1px rgba(87, 81, 81, 0.6);
+}
 </style>
 
